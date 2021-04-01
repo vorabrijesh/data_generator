@@ -1,0 +1,211 @@
+  <script>
+	</script>
+  <form id="render_form" >
+    <table  class="form-group" border="1" style="width:100%" id = "render_table">
+      <tr><th>Keys</th><th>Values</th></tr>
+      {% set p = namespace(value=1) %}
+        {% for key in data %}
+        {% if key in hidden %}
+        <tr style="width: 40%; display: none;" >
+        {% else %}
+        <tr style="width:40%">
+        {% endif %}
+            {% if data[key]['type']=='int' %}
+              <td><input  class="form-control" type="text" id={{key}} value={{key}} name={{"key_"+p.value|string+ ".text"}} style= "width:100%" readonly> </td>
+              <td id="{{key}}"><input  class="form-control" type="text" id={{data[key]['content']}} value={{data[key]['content']}} name={{"value_"+p.value|string+ ".text"}} style= "width:100%" readonly> </td>
+            {% endif %}
+            {% if data[key]['type']=='text' %}
+              <td><input  class="form-control" type="text" id="added_key" value={{key}}  style= "width:100%" name={{"key_"+p.value|string+ ".text"}} readonly> </td>
+                {% if key in readonly or key=='jobid' %}
+                  <td><input  class="form-control" type="text" id={{data[key]['content']}} value={{data[key]['content']}} name={{"value_"+p.value|string+ ".text"}} style= "width:100%" readonly> </td>
+                {% else %}
+              <td><input  class="form-control" type="text" id={{data[key]['content']}} value={{data[key]['content']}} name={{"value_"+p.value|string+ ".text"}} style= "width:100%"> </td>
+               {% endif %}
+            {% endif %}
+            
+            {% if data[key]['type']=='dropdown' %}
+            <td><input  class="form-control" type="text" id="added_key" value={{key}}  name={{"key_"+p.value|string+ ".dropdown"}} style= "width:100%" readonly> </td>
+            <td>
+              {% if key in readonly %}
+              <select  class="form-control" id="options" name={{"value_"+p.value|string+".dropdown"}} style= "width:100%" disabled>
+              {% for opt in data[key]['values'] %}
+                {% if opt==data[key]['content'] %}
+                <option value={{data[key]['content']}} type="text" selected>{{data[key]['content']}}</option>
+                {% else %}
+                <option value={{opt}} type="text">{{opt}}</option>
+                {% endif %}
+              {% endfor %}
+              </select> 
+            {% else %}
+              <select  class="form-control" id="options" name={{"value_"+p.value|string+".dropdown"}} style= "width:100%">
+              {% for opt in data[key]['values'] %}
+                {% if opt==data[key]['content'] %}
+                <option value={{data[key]['content']}} type="text" selected>{{data[key]['content']}}</option>
+                {% else %}
+                <option value={{opt}} type="text">{{opt}}</option>
+                {% endif %}
+              {% endfor %}
+              </select>
+             {% endif %}
+            </td>
+            {% endif %}
+            {% if data[key]['type']=='checkbox' %}
+            <td><input  class="form-control" type="text" id="added_key" value={{key}} name={{"key_"+p.value|string+ ".checkbox"}} style= "width:100%" readonly> </td>
+            <td>
+              <div style="height: 100%;" class="form-control" id="checkboxes">
+                {% for i in range(0, (data[key]['values'])|length) %}
+                {% if data[key]['values'][i] in data[key]['content'] %}
+                {% if key in readonly %}
+                <input type="checkbox" id={{"check_"+i|string}} name={{"value_"+p.value|string+".checkbox"}} value={{"check_"+i|string}} style="margin:0 5px 0 20px" checked disabled>
+                {% else %}
+                <input type="checkbox" id={{"check_"+i|string}} name={{"value_"+p.value|string+".checkbox"}} value={{"check_"+i|string}} style="margin:0 5px 0 20px" checked>
+                {% endif %}
+                <label for={{"check_"+i|string}} name={{"check_"+i|string}} value={{data[key]['values'][i]}}>{{data[key]['values'][i]}}</label>
+                <br>
+                {% else %}
+                {% if key in readonly %}
+                <input type="checkbox" id={{"check_"+i|string}} name={{"value_"+p.value|string+".checkbox"}} value={{"check_"+i|string}} style="margin:0 5px 0 20px" disabled>
+                {% else %}
+                <input type="checkbox" id={{"check_"+i|string}} name={{"value_"+p.value|string+".checkbox"}} value={{"check_"+i|string}} style="margin:0 5px 0 20px">
+                {% endif %}             
+                <label for={{"check_"+i|string}} name={{"check_"+i|string}} value={{data[key]['values'][i]}}>{{data[key]['values'][i]}}</label>
+                <br>
+                {% endif %}
+                {% endfor %}
+              </div>
+            </td>
+            {% endif %}
+            {% if data[key]['type']=='radio' %}
+            <td><input  class="form-control" type="text" id="added_key" value={{key}} name={{"key_"+p.value|string+ ".radio"}} style= "width:100%" readonly> </td>
+            <td>
+              <div style="height: 100%;" class="form-control" id={{"radiobuttons"+key}}>
+                {% for i in range(0, (data[key]['values'])|length) %}
+                {% if data[key]['values'][i] == data[key]['content'] %}
+                {% if key in readonly %}
+                <input type="radio" id={{key+".radio_"+i|string}} name={{"value_"+p.value|string+".radio"}} value={{"radio_"+i|string}} style="margin:0 5px 0 20px" checked disabled>
+                {% else %}
+                <input type="radio" id={{key+".radio_"+i|string}} name={{"value_"+p.value|string+".radio"}} value={{"radio_"+i|string}} style="margin:0 5px 0 20px" checked>
+                {% endif %}
+                <label for={{key+".radio_"+i|string}} name={{"radio_"+i|string}} value={{data[key]['values'][i]}}>{{data[key]['values'][i]}}</label>
+                <br>
+                {% else %}
+                {% if key in readonly %}
+                <input type="radio" id={{key+".radio_"+i|string}} name={{"value_"+p.value|string+".radio"}} value={{"radio_"+i|string}} style="margin:0 5px 0 20px" disabled>
+                {% else %}
+                <input type="radio" id={{key+".radio_"+i|string}} name={{"value_"+p.value|string+".radio"}} value={{"radio_"+i|string}} style="margin:0 5px 0 20px">
+                {% endif %}              
+                <label for={{key+".radio_"+i|string}} name={{"radio_"+i|string}} value={{data[key]['values'][i]}}>{{data[key]['values'][i]}}</label>
+                <br>
+                {% endif %}
+                {% endfor %}
+              </div>
+            </td>
+            {% endif %}
+            {% if data[key]['type']=='file' %}
+            {% if data[key]['content'] == '' %}
+            <td><input  class="form-control" type="text" id={{key}} value={{key}} name={{"key_"+p.value|string+ ".file"}} style= "width:100%" readonly> </td>
+            {% if key in readonly %}
+            <td><input  class="form-control" type="file" id={{key}} name={{"value_"+p.value|string+ ".file"}} style= "width:100%" disabled> </td>
+            {% else %}
+            <td><input  class="form-control" type="file" id={{key}} name={{"value_"+p.value|string+ ".file"}} style= "width:100%"> </td>
+            {% endif %}
+            {% else %}
+            <td><input  class="form-control" type="text" id={{key}} value={{key}} name={{"key_"+p.value|string+ ".file_pre"}} style= "width:100%" readonly> </td>
+            <td><div style="height: 100%;" class="form-control">
+            <a href="http://localhost:5000/file?key={{key}}&filename={{data[key]['content']}}" target="_blank">{{data[key]['content']}}</a>
+            </div></td>
+            {% endif %}
+            {% endif %}
+            {% set p.value = p.value + 1 %}
+        </tr>
+        {% endfor %}
+        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">Add Data</button>
+    </table> 
+    <button type="button" class="btn btn-success" onclick="submitNode()">Execute Node</button>
+  </form>
+  <div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Table Fields</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <!-- Modal body -->
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+                <label for="optionList">Select the type of fields..</label>
+                <select id="optionList" name="optionList" class="form-control" onchange="display_option(document.getElementById('optionList').value);">
+                      <option selected="selected"> select from options</option>
+                      <option value="normal" type="text">Text</option>
+                      <option value="dropdown" type="text">Dropdown</option>
+                      <option value="checkbox" type="text">Checkbox</option>
+                      <option value="radiobutton" type="text">Radio Button</option>
+                      <option value="fileupload" type="text">Upload file</option>
+                </select>
+              </div>
+              <div id="normal" style="display:none;"> 
+              <div class="form-group">
+                    <label for="a">key</label>
+                    <input type="text" name="a" id="keyi"/>
+                    <br>
+                    <label for="b">value</label> 
+                    <input type="text" name="b" id="valuei"/>
+              </div>
+            </div>
+                <div id="dropdown" style="display:none;"> 
+                  <div class="form-group" id="dropfield">
+                    <label for="a">Key</label>
+                    <input type="text" name="a" id="keyb"/>
+                    <br>
+                    <button type="button" onclick="add_inner('dropfield', 'conb', 'valueb')">Add values..</button>
+                    <br><br>
+                        <label for="b">Values:</label>
+                        <br><br>
+                        
+                  </div> 
+                </div>
+                <div id="checkbox" style="display:none;"> 
+                    <div class="form-group" id="checkfield">
+                        <label for="a">key</label>
+                        <input type="text" name="a" id="keyc"/>
+                        <br>
+                        <button type="button" onclick="add_inner('checkfield', 'conc', 'valuec')">Add values..</button>
+                        <br><br>
+                            <label for="c">Values:</label>
+                            <br><br>
+                    </div>
+                </div>
+                <div id="radiobutton" style="display:none;"> 
+                    <div class="form-group" id="radiofield">
+                        <label for="a">key</label>
+                        <input type="text" name="a" id="keyr"/>
+                        <br>
+                        <button type="button" onclick="add_inner('radiofield', 'conr', 'valuer')">Add values..</button>
+                        <br><br>
+                            <label for="r">Values:</label>
+                            <br><br>
+                    </div>
+                </div>
+                <div id="fileupload" style="display: none;">
+                  <div class="form-group" id="filefield">
+                    <label for="a">key</label>
+                    <input type="text" name="a" id="keyf"/>
+                  </div>
+                </div>
+          </form>
+        </div>
+        
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-warning" onclick="add_field(document.getElementById('optionList').value)">ADD</button>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+

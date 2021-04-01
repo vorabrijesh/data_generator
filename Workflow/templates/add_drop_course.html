@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="{{url_for('static', filename='functions.js')}}"></script>
+</head>
+<body>
+<div class="container" style="align-items: center; text-align: left; margin-top: 3%;">
+<div><a href="http://localhost:5000/dashboard">Go to Dashboard</a></div><br><br>
+<form id="render_form" >
+    <table  class="form-group" border="1" style="width:100%" id = "render_table">
+        <tr><th>Key</th><th>Values</th></tr>
+        <tr>
+            <td><input class = "form-control" type="text" name="key_1.text" id="added_key" value="role" style="width: 100%;" readonly></td>
+            <td><input class = "form-control" type="text" id="added_value" name="value_1.text" style="width: 100%;" value="course_add_drop" readonly></td>
+        </tr>
+        <tr>
+            <td><input class = "form-control" type="text" name="key_2.text" id="added_key" value="nodeid" style="width: 100%;" readonly></td>
+            <td><input class = "form-control" type="text" id="added_value" name="value_2.text" style="width: 100%;" value=""></td>
+        </tr>
+        <tr>
+            <td><input class = "form-control" type="text" name="key_3.text" id="added_key" value="course_instructor" style="width: 100%;" readonly></td>
+            <td><input  class="form-control" type = "text" id="added_value" name="value_3.text" style= "width:100%" value="" readonly></td>
+        </tr>
+        <tr>
+            <td><input class = "form-control" type="text" name="key_4.file" id="added_key" value="add_drop_form" style="width: 100%;" readonly></td>
+            <td><input class = "form-control" type="file" id="added_value" name="value_4.file" style="width: 100%;"></td>
+        </tr>
+        <tr>
+            <td><input class = "form-control" type="text" name="key_5.radio" id="added_key" value="send_to_faculty_advisor" style="width: 100%;" readonly></td>
+            <td>
+                <div style="height: 100%;" class="form-control" id="radiobuttonssend_to_faculty_advisor"}}>
+                <input type="radio" id="send_to_faculty_advisor.radio_0" name="value_5.radio" value="radio_0" style="margin:0 5px 0 20px" disabled>
+                <label for="send_to_faculty_advisor.radio_0" name=".radio_0" value="Yes">Yes</label>
+                <br>
+                <input type="radio" id="send_to_faculty_advisor.radio_1" name="value_5.radio" value="radio_1" style="margin:0 5px 0 20px" checked disabled>
+                <label for="send_to_faculty_advisor.radio_1" name=".radio_1" value="No">No</label>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <button type="button" class="btn btn-success" onclick="addjob()">Insert Job</button>
+</form> 
+</div>        
+</body>
+</html>

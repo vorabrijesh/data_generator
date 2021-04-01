@@ -1,0 +1,2 @@
+{'wf_CAM_AC':[lambda x:'node_analytics' if x['node']=='node_camera' else 'node_AC']}
+{'wf_ANALYTICS':[lambda x:'node_ignore' if x['node']=='node_analytics' and x['count_faces']<10 else 'node_AC' ] }

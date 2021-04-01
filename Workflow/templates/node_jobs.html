@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+<head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script src="{{url_for('static', filename='functions.js')}}"></script>
+</head>
+<body>
+        <ul class="nav nav-tabs md-tabs " id="myTabEx" role="tablist">
+                {% for x in joblist %}
+                  <li class="nav-item">
+                    <a class="nav-link" id="tb-tab{{x}}" data-toggle="tab" href="#tab{{x}}" role="tab" aria-controls="tab{{x}}" aria-selected="false">{{x}}</a>
+                  </li>
+                  {% endfor %}
+                </ul>
+                <div class="tab-content pt-5" id="myTabContentEx">
+
+                {% for x in joblist %}
+                        <div class="tab-pane fade" id="tab{{x}}" role="tabpanel" aria-labelledby="tb-tab{{x}}">
+                        <p>
+                        {% for i in joblist[x] %}
+                        <input type="radio" name="job_name" id="node_{{i}}" value="{{i}}" />
+                        <label for="node_{{i}}"> Job {{i}} </label> <br />
+                        <br />
+                        {% endfor %}
+                        </p>
+                        </div>
+                {% endfor %}  
+        </div>
+                <!-- END OF Tab Section  -->
+
+        <input type="submit" value="Submit" onclick="renderJob()">    
+</body>
+
+</html>

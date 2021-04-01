@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+    function addjob() {
+    //raise ajax query
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            //document.getElementById("render_job").innerHTML = this.responseText;            
+        }  
+    };
+    var formData = new FormData(document.getElementById("form_insertjob"));
+    xhttp.open("POST", "http://localhost:5000//wfe/wf/invigilation", true);
+    xhttp.send(formData);
+}
+	</script>
+</head>
+<body>
+    <div class="container" style="align-items: center; text-align: left; margin-top: 3%;">
+    <div><a href="http://localhost:5000/dashboard">Go to Dashboard</a></div><br><br>
+    <form id="form_insertjob">
+        <table  class="form-group" border="1px" style="width:100%;" id = "table_insertjob">
+        <tr><th>Key</th><th>Values</th></tr>
+        <tr>
+            <td><label class = "form-control" for="job_name" style= "width:100%">Job Name</label></td>
+            <td><input class = "form-control" type="text" id="job_name" name="job_name" style= "width:100%"></td>
+        </tr>
+        <tr>
+            <td><label class = "form-control"for="role" style= "width:100%">Role</label></td>
+            <td><input class = "form-control"type="text" id="role" name="role" style= "width:100%"></td>
+        </tr>
+        <tr>
+            <td><label class = "form-control"for="node" style= "width:100%">Start Node</label></td>
+            <td><input class = "form-control" type="text" id="node" name="node" style= "width:100%"></td>
+        </tr>
+        <tr>
+            <td><label class = "form-control"for="exam" style= "width:100%">Exam</label></td>
+            <td><input class = "form-control"type="text" id="exam" name="exam" style= "width:100%"></td>
+        </tr>
+        <tr>
+            <td><label class = "form-control"for="date" style= "width:100%">Date</label></td>
+            <td><input class = "form-control"type="text" id="date" name="date" style= "width:100%"></td>
+        </tr>
+        <tr>
+            <td><label class = "form-control"for="time" style= "width:100%">Time</label></td>
+            <td><input class = "form-control"type="text" id="time" name="time" style= "width:100%"></td>
+        </tr>
+        <tr>
+            <td><label class = "form-control"for="invigilator" style= "width:100%">Invigilator</label></td>
+            <td><input class = "form-control"type="text" id="invigilator" name="invigilator" style= "width:100%"></td>
+        </tr>
+        
+        </table>
+        <input class="btn btn-success" type="submit" onclick="addjob()"/>
+    </form>  
+    </div>       
+</body>
+
+</html>
+

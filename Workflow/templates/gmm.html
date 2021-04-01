@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="{{url_for('static', filename='functions.js')}}"></script>
+</head>
+<body>
+<div class="container" style="align-items: center; text-align: left; margin-top: 3%;">
+<div><a href="http://localhost:5000/dashboard">Go to Dashboard</a></div><br><br>
+<form id="render_form" >
+    <table  class="form-group" border="1" style="width:100%" id = "render_table">
+        <tr><th>Key</th><th>Values</th></tr>
+        <tr>
+            <td><input class = "form-control" type="text" name="key_1.text" id="added_key" value="role" style="width: 100%;" readonly></td>
+            <td><input class = "form-control" type="text" id="added_value" name="value_1.text" style="width: 100%;" value="gmm" readonly></td>
+        </tr>
+        <tr>
+            <td><input class = "form-control" type="text" name="key_2.text" id="added_key" value="nodeid" style="width: 100%;" readonly></td>
+            <td><input class = "form-control" type="text" id="added_value" name="value_2.text" style="width: 100%;" value="controller"></td>
+        </tr>
+       
+
+        
+        <tr>
+            <td><input class = "form-control" type="text" name="key_5.text" id="added_key" value="target_class" style="width: 100%;" readonly></td>
+            <td><input class = "form-control" type="text" id="added_value" name="value_5.text" style="width: 100%;" value="0"></td>
+        </tr>
+        <tr>
+            <td><input class = "form-control" type="text" name="key_6.text" id="added_key" value="msg" style="width: 100%;" readonly></td>
+            <td><input class = "form-control" type="text" id="added_value" name="value_6.text" style="width: 100%;" value="generate_gmm_data"></td>
+        </tr>
+        
+    </table>
+    <button type="button" class="btn btn-success" onclick="addjob()">Insert Job</button>
+</form> 
+</div>        
+</body>
+
+</html>
+

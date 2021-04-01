@@ -1,0 +1,414 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="{{url_for('static', filename='functions.js')}}"></script>
+<script>
+    // variables
+    var i=1;
+    var key="key_", val= "value_";
+
+    // function for displaying the types of data options
+    function display_option(show){
+        document.getElementById('normal').style.display = "none";
+        document.getElementById('dropdown').style.display = "none";
+        document.getElementById('checkbox').style.display = "none";
+        document.getElementById('radiobutton').style.display = "none";
+        document.getElementById('fileupload').style.display = "none";
+        document.getElementById(show).style.display = "block";
+    }
+    
+    // function for removing a field in form 
+    function removeField(f_id){
+        var x = document.getElementById('render_table');
+        var y = document.getElementById(f_id).parentElement.parentElement;
+        x.removeChild(y);
+    }
+    
+    // function for adding fields in modal(inner dialog box)
+    function add_inner(main, value1, value2){
+        var a = document.getElementById(main);
+        var n = a.getElementsByTagName("input").length - 1;
+        var w = document.createElement("div");
+        w.setAttribute('class', 'container');
+        var x = document.createElement("input");
+        x.type = "text";
+        x.setAttribute('id',value2+n);
+        x.setAttribute('name',"b");
+        w.setAttribute('id', value1+n);
+        var y = document.createElement("br");
+        var z = document.createElement("button");
+        z.type = 'button';
+        z.textContent = 'Remove';
+        z.setAttribute('id','removeinner_'+n);
+        z.setAttribute('class','btn btn-danger');
+        z.onclick = function(){
+            var k = value1+n;
+            remove_inner(main,k);
+        }
+        w.appendChild(x);
+        w.appendChild(z);
+        a.appendChild(w);
+    }
+    
+    // function for removing fields in modal(inner dialog box)
+    function remove_inner(id, f_id){
+        var x = document.getElementById(id);
+        var y = document.getElementById(f_id);
+        x.removeChild(y)
+    }
+    
+    // function for adding text field
+    function add_text(key1, value1){
+        //add input1
+        var x = document.createElement("TR");
+        var y = document.createElement("TD");
+        var input = document.createElement("input");
+        input.type = "text";
+        input.setAttribute('id','added_key');
+        input.setAttribute('class','form-control');
+        input.setAttribute('name',key+i+'.text');
+        input.setAttribute("style", "width:100%");
+        input.value = key1;
+        y.appendChild(input);
+
+        //add input2 
+        var y1 = document.createElement("TD");
+        var input1 = document.createElement("input");
+        input1.type = "text";
+        input1.setAttribute("style", "width:100%");
+        input1.setAttribute('id','added_value');
+        input1.setAttribute('class','form-control');
+        input1.setAttribute('name',val+i+'.text');
+        input1.value = value1;
+        y1.appendChild(input1);
+        
+        // add remove button
+        var y2 = document.createElement("TD");
+        var rm = document.createElement("button");
+        rm.type = 'button';
+        rm.textContent = 'Remove';
+        rm.setAttribute("style", "width:80%");
+        rm.setAttribute('id','remove_'+i);
+        rm.setAttribute('class','btn btn-danger');
+        rm.onclick = function(){
+            var p = this.id;
+            removeField(p);
+        }
+        i=i+1;
+        y2.appendChild(rm);
+        x.appendChild(y);
+        x.appendChild(y1);
+        x.appendChild(y2)
+        document.getElementById("render_table").appendChild(x);
+    }
+    
+    // function for adding dropdown field
+    function add_dropdown(key1, arr){
+        //add input1
+        var u = document.createElement("tbody");
+        var x = document.createElement("TR");
+        var y = document.createElement("TD");
+        var input = document.createElement("input");
+        input.type = "text";
+        input.setAttribute('id','added_key');
+        input.setAttribute('class','form-control');
+        input.setAttribute('name',key+i+'.dropdown');
+        input.setAttribute("style", "width:100%");
+        input.value = key1;
+        y.appendChild(input);
+
+        //add input2 
+        var y1 = document.createElement("TD");
+        var input1 = document.createElement("select");
+        input1.setAttribute("style", "width:100%");
+        input1.setAttribute('id','options');
+        input1.setAttribute('class','form-control');
+        input1.setAttribute('name',val+i+'.dropdown');
+        var k = 0;
+        for(k=0;k<arr.length;k++){
+            var o = document.createElement("option");
+            o.type = "text";
+            o.value = arr[k];
+            o.textContent = arr[k];
+            input1.append(o);
+        }
+        y1.appendChild(input1);
+        
+        // add remove button
+        var y2 = document.createElement("TD");
+        var rm = document.createElement("button");
+        rm.type = 'button';
+        rm.textContent = 'Remove';
+        rm.setAttribute("style", "width:80%");
+        rm.setAttribute('id','remove_'+i);
+        rm.setAttribute('class','btn btn-danger');
+        rm.onclick = function(){
+            var p = this.id;
+            removeField(p);
+        }
+        i = i + 1;
+        y2.appendChild(rm);
+        x.appendChild(y);
+        x.appendChild(y1);
+        x.appendChild(y2)
+        document.getElementById("render_table").appendChild(x);
+    }
+    
+    // function for adding checkbox fields
+    function add_checkfield(key1, arr){
+        //add input1
+        var x = document.createElement("TR");
+        var y = document.createElement("TD");
+        var input = document.createElement("input");
+        input.type = "text";
+        input.setAttribute('id','added_key');
+        input.setAttribute('class','form-control');
+        input.setAttribute('name',key+i+'.checkbox');
+        input.setAttribute("style", "width:100%");
+        input.value = key1;
+        y.appendChild(input);
+
+        //add input2 
+        var y1 = document.createElement("TD");
+        var input1 = document.createElement("div");
+        input1.setAttribute("style", "height:100%");
+        input1.setAttribute('id','checkboxes');
+        input1.setAttribute('class','form-control', 'container');
+        //input1.setAttribute('name',val+i+'.checkbox');
+        var k = 0;
+        for(k=0;k<arr.length;k++){
+            var m = document.createElement("label");
+            var l = document.createElement("input");
+            var br = document.createElement("br");
+            l.type = "checkbox";
+            l.setAttribute("id", "check_"+k);
+            l.setAttribute('name',val+i+'.checkbox');
+            l.setAttribute('value','check_'+k);
+            m.setAttribute("for", "check_"+k);
+            m.setAttribute("name", "check_"+k)
+            l.setAttribute("style", "margin:0 5px 0 20px")
+            m.value = arr[k];
+            m.textContent = arr[k];
+            input1.append(l);
+            input1.append(m);
+            input1.append(br)
+        }
+        y1.appendChild(input1);
+        
+        // add remove button
+        var y2 = document.createElement("TD");
+        var rm = document.createElement("button");
+        rm.type = 'button';
+        rm.textContent = 'Remove';
+        rm.setAttribute("style", "width:80%");
+        rm.setAttribute('id','remove_'+i);
+        rm.setAttribute('class','btn btn-danger');
+        rm.onclick = function(){
+            var p = this.id;
+            removeField(p);
+        }
+        i=i+1;
+        y2.appendChild(rm);
+        x.appendChild(y);
+        x.appendChild(y1);
+        x.appendChild(y2)
+        document.getElementById("render_table").appendChild(x);
+    }
+    
+    // function for adding radio fields
+    function add_radiofield(key1, arr){
+        //add input1
+        var x = document.createElement("TR");
+        var y = document.createElement("TD");
+        var input = document.createElement("input");
+        input.type = "text";
+        input.setAttribute('id','added_key');
+        input.setAttribute('class','form-control');
+        input.setAttribute('name',key+i+'.radio');
+        input.setAttribute("style", "width:100%");
+        input.value = key1;
+        y.appendChild(input);
+
+        //add input2 
+        var y1 = document.createElement("TD");
+        var input1 = document.createElement("div");
+        input1.setAttribute("style", "height:100%");
+        input1.setAttribute('id','radiobuttons'+key1);
+        input1.setAttribute('class','form-control', 'container');
+        var k = 0;
+        for(k=0;k<arr.length;k++){
+            var m = document.createElement("label");
+            var l = document.createElement("input");
+            var br = document.createElement("br");
+            l.type = "radio";
+            l.setAttribute("id", key1+".radio_"+k);
+            l.setAttribute("value", "radio_"+k);
+            m.setAttribute("for", key1+".radio_"+k);
+            m.setAttribute("name", ".radio_"+k);
+            l.setAttribute("style", "margin:0 5px 0 20px");
+            //l.setAttribute("name", key1);
+            l.setAttribute('name',val+i+'.radio');
+            m.value = arr[k];
+            //l.value = arr[k];
+            m.textContent = arr[k];
+            input1.append(l);
+            input1.append(m);
+            input1.append(br)
+        }
+        y1.appendChild(input1);
+        
+        // add remove button
+        var y2 = document.createElement("TD");
+        var rm = document.createElement("button");
+        rm.type = 'button';
+        rm.textContent = 'Remove';
+        rm.setAttribute("style", "width:80%");
+        rm.setAttribute('id','remove_'+i);
+        rm.setAttribute('class','btn btn-danger');
+        rm.onclick = function(){
+            var p = this.id;
+            removeField(p);
+        }
+        i = i + 1;
+        y2.appendChild(rm);
+        x.appendChild(y);
+        x.appendChild(y1);
+        x.appendChild(y2)
+        document.getElementById("render_table").appendChild(x);
+    }
+    
+    function add_file(key1){
+        //add input1
+        var x = document.createElement("TR");
+        var y = document.createElement("TD");
+        var input = document.createElement("input");
+        input.type = "text";
+        input.setAttribute('id','added_key');
+        input.setAttribute('class','form-control');
+        input.setAttribute('name',key+i+'.file');
+        input.setAttribute("style", "width:100%");
+        input.value = key1;
+        y.appendChild(input);
+
+        //add input2 
+        var y1 = document.createElement("TD");
+        var input1 = document.createElement("input");
+        input1.type = "file";
+        input1.setAttribute("style", "width:100%");
+        input1.setAttribute('id','added_value');
+        input1.setAttribute('class','form-control');
+        input1.setAttribute('name',val+i+'.file');
+        y1.appendChild(input1);
+        
+        // add remove button
+        var y2 = document.createElement("TD");
+        var rm = document.createElement("button");
+        rm.type = 'button';
+        rm.textContent = 'Remove';
+        rm.setAttribute("style", "width:80%");
+        rm.setAttribute('id','remove_'+i);
+        rm.setAttribute('class','btn btn-danger');
+        rm.onclick = function(){
+            var p = this.id;
+            removeField(p);
+        }
+        i=i+1;
+        y2.appendChild(rm);
+        x.appendChild(y);
+        x.appendChild(y1);
+        x.appendChild(y2)
+        document.getElementById("render_table").appendChild(x);
+    }
+
+    // function for adding fields in the form
+    function add_field(val){
+        if(val=="normal"){
+            var a = document.getElementById("keyi");
+            var b = document.getElementById("valuei");
+            var table = document.getElementById('render_table');
+            i = table.rows.length;
+            add_text(a.value, b.value);
+        }
+        else if(val=="dropdown"){
+            var dr = document.getElementById("dropfield");
+            var pr = dr.getElementsByTagName("input");
+            var n = pr.length - 1;
+            var t=0, arr=[];
+            var key = document.getElementById("keyb").value;
+            for(t=0;t<n;t++){
+                var p = pr[t+1];
+                arr.push(p.value);
+            }
+            var table = document.getElementById('render_table');
+            i = table.rows.length;
+            add_dropdown(key, arr);
+        }
+        else if(val=="checkbox"){
+            var dr = document.getElementById("checkfield");
+            var pr = dr.getElementsByTagName("input");
+            var n = pr.length - 1;
+            var t=0, arr=[];
+            var key = document.getElementById("keyc").value;
+            for(t=0;t<n;t++){
+                var p = pr[t+1];
+                arr.push(p.value);
+            }
+            var table = document.getElementById('render_table');
+            i = table.rows.length;
+            add_checkfield(key, arr);
+        }
+        else if(val=="radiobutton"){
+            var dr = document.getElementById("radiofield");
+            var pr = dr.getElementsByTagName("input");
+            var n = pr.length - 1;
+            var t=0, arr=[];
+            var key = document.getElementById("keyr").value;
+            for(t=0;t<n;t++){
+                var p = pr[t+1];
+                arr.push(p.value);
+            }
+            var table = document.getElementById('render_table');
+            i = table.rows.length;
+            add_radiofield(key, arr);
+        }
+        else if(val=="fileupload"){
+            var b = document.getElementById("keyf");
+            add_file(b.value);
+        }
+    }
+</script>
+
+<table style="width:100%" border="1">
+    <tr>
+        <td> Login: <textarea id="id_login"></textarea> <button id="id_btn_login" onclick="fetchPendingJobs()"> Submit </button>
+            <div style="float:right ;margin-right:30px ;padding:10px;" class ="dropdown btn-group dropleft">
+                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Add Job
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <a class="dropdown-item" href="http://localhost:5000/add_drop_course">Add/Drop Course</a>
+                  <a class="dropdown-item" href="http://localhost:5000/course_registration">Course Registration</a>
+                  <a class="dropdown-item" href="http://localhost:5000/invigilation">Invigilation</a>
+                  <a class="dropdown-item" href="http://localhost:5000/ga">GA</a>
+                  <a class="dropdown-item" href="http://localhost:5000/gan">GAN</a>
+                  <a class="dropdown-item" href="http://localhost:5000/gmm">GMM</a>
+                  <a class="dropdown-item" href="http://localhost:5000/insertjob">General</a>
+                </div>
+              </div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table border="1" style="width:100%">
+                <tr style="width:100%">
+                    <td style="width:30%"> Pending jobs: <button id="id_btn_jobs_refresh" onclick="fetchPendingJobs()"> Refresh </button> 
+                        <div id="id_pending"> </div>
+                    </td>
+                    <td style="width:100%;height:50%"> Node GUI:<div id= "render_job"></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
